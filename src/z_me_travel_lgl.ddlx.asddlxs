@@ -1,0 +1,126 @@
+@Metadata.layer: #CORE
+
+// 1. #CUSTOMER
+// 2.
+//....
+// 5. #CORE
+@UI: { headerInfo : { typeName: 'Travel',
+                      typeNamePlural: 'Travels',
+                      title: { type: #STANDARD,
+                               value: 'TravelID' } },
+        presentationVariant: [{ sortOrder: [{ by : 'TravelID',
+                                              direction: #DESC }],
+                               visualizations: [{ type: #AS_LINEITEM }] }] }
+annotate entity z_c_travel_lgl
+    with 
+{
+   
+   @UI.facet: [{ id : 'TravelMasterData',
+                 purpose: #STANDARD,
+                 type: #IDENTIFICATION_REFERENCE,
+                 label: 'Travel Master Data',
+                 position: 10 }]
+   @UI.hidden: true
+   TravelUUID;
+
+    @UI: { lineItem: [{ position: 10,
+                        importance: #HIGH,
+                        label: 'Travel ID' },
+                      { type: #FOR_ACTION,
+                        dataAction: 'acceptTravel',
+                        label: 'Accept Travel',
+                        position: 10 },
+                      { type: #FOR_ACTION,
+                        dataAction: 'rejectTravel',
+                        label: 'Reject Travel',
+                        position: 20 },
+                      { type: #FOR_ACTION,
+                        dataAction: 'deductDiscount',
+                        label: 'Discount',
+                        position: 30 }],
+           selectionField: [{ position: 10 }],
+           identification: [{ position: 10 },
+                            { type: #FOR_ACTION,
+                              dataAction: 'acceptTravel',
+                              label: 'Accept Travel',
+                              position: 10 },
+                            { type: #FOR_ACTION,
+                              dataAction: 'rejectTravel',
+                              label: 'Reject Travel',
+                              position: 20 },
+                            { type: #FOR_ACTION,
+                              dataAction: 'deductDiscount',
+                              label: 'Discount',
+                              position: 30 }] }
+    TravelID;
+    
+
+    @Consumption.valueHelpDefinition: [{ entity: { name : '/DMO/I_Agency_StdVH',
+                                                   element: 'AgencyID' },
+                                         useForValidation: true }]
+    @UI: { lineItem: [{ position: 20,
+                     importance: #HIGH }],
+           selectionField: [{ position: 20 }],
+           identification: [{ position: 20 }] }
+    AgencyID;
+    
+    @Consumption.valueHelpDefinition: [{ entity: { name : '/DMO/I_Customer_StdVH',
+                                                   element: 'CustomerID' },
+                                         useForValidation: true }]
+    @UI: { lineItem: [{ position: 30,
+                     importance: #HIGH }],
+           selectionField: [{ position: 30 }],
+           identification: [{ position: 30 }] }
+    CustomerID;
+    
+    @UI:  { lineItem: [{ position: 40,
+                         importance: #MEDIUM }],
+            identification: [{ position: 40 }]}
+    BeginDate;
+    
+    @UI.lineItem: [{ position: 50,
+                     importance: #MEDIUM }]
+    @UI.identification: [{ position: 50 }]
+    EndDate;
+    
+    @UI.lineItem: [{ position: 60,
+                     importance: #LOW }]
+    @UI.identification: [{ position: 60 }]
+    BookingFee;
+    
+    @UI.lineItem: [{ position: 70,
+                     importance: #HIGH }]
+    @UI.identification: [{ position: 70 }]
+    TotalPrice;
+    
+    @UI.lineItem: [{ position: 71,
+                     importance: #MEDIUM}]
+    @UI.identification: [{ position: 71 }]
+    PriceWithVAT;
+    
+    @Consumption.valueHelpDefinition: [{ entity: { name : 'I_CurrencyStdVH',
+                                                   element: 'Currency' },
+                                         useForValidation: true }]
+//    @UI.lineItem: [{ position: 80,
+//                     importance: #HIGH }]
+//    @UI.identification: [{ position: 80 }]
+    CurrencyCode;
+    
+    @Consumption.valueHelpDefinition: [{ entity: { name : '/DMO/I_Overall_Status_VH',
+                                                   element: 'OverallStatus' }}]
+    @UI: { lineItem: [{ position: 90,
+                     importance: #LOW }],
+           selectionField: [{ position: 40 }],
+           textArrangement: #TEXT_ONLY,
+           identification: [{ position: 60 }] }
+    OverallStatus;
+    
+    @UI.hidden: true
+    OverallStatusText;
+    
+    @UI.hidden: true
+    LastChangedAt;
+    
+    @UI.hidden: true
+    LocalLastChangedAt;
+}
